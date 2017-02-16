@@ -1,8 +1,10 @@
 from cvxopt.solvers import qp
 from cvxopt.base import matrix
 import numpy, pylab, random, math
+from datetime import datetime
 #matrix is a function which takes anything that can be interpreted as a matrix, and converts it into a cvxopt matrix which can be passed as a parameter to qp
 
+## generate training data
 classA = [(random.normalvariate(-1.5, 1),
            random.normalvariate(0.5, 1),
            1.0)
@@ -19,11 +21,7 @@ classB = [(random.normalvariate(0.0, 0.5),
 data = classA + classB
 random.shuffle(data)
 
-
-
-# divide list into t and x vector
-# make matrix p
-
+#generate a P matrix
 def generateP(data, N):
     p = numpy.zeros((N, N))
     for i in range(N):
@@ -32,8 +30,10 @@ def generateP(data, N):
     return p
 
 
+#kernel function
 def kernel(x_vec, y_vec):
     return radialBasis(x_vec, y_vec)
+
 
 
 def constructQ(N):
@@ -91,6 +91,7 @@ def indicator(x, y):
     return result
 
 
+pylab.figure()
 pylab.hold(True)
 pylab.plot([p[0] for p in classA],
             [p[1] for p in classA],
@@ -105,4 +106,5 @@ grid = matrix([[indicator(x, y)
       for y in yrange ]
       for x in xrange])
 pylab.contour(xrange, yrange, grid, (-1.0, 0, 1.0), colors=("red", "black", "blue"), linewidths=(1, 3, 1))
+pylab.savefig("../plots/{}.png".format(datetime.now().strftime('%s')))
 pylab.show()
