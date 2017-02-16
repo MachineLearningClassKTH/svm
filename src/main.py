@@ -7,16 +7,16 @@ from datetime import datetime
 ## generate training data
 classA = [(random.normalvariate(-1.5, 1),
            random.normalvariate(0.5, 1),
-           1.0)
+           1)
            for i in range(5)] + \
         [(random.normalvariate(1.5, 1),
           random.normalvariate(0.5, 1),
-          1.0)
+          1)
           for i in range(5)]
 
 classB = [(random.normalvariate(0.0, 0.5),
             random.normalvariate(-0.5, 0.5),
-            -1.0)
+            -1)
             for i in range(10)]
 data = classA + classB
 random.shuffle(data)
@@ -32,7 +32,7 @@ def generateP(data, N):
 
 #kernel function
 def kernel(x_vec, y_vec):
-    return radialBasis(x_vec, y_vec)
+    return polynomialKernel(x_vec, y_vec)
 
 
 
@@ -55,7 +55,7 @@ def linearKernel(x_vec, y_vec):
     return numpy.dot(x_vec, y_vec) + 1
 
 def polynomialKernel(x_vec, y_vec):
-    return (numpy.dot(x_vec, y_vec) + 1) **3
+    return (numpy.dot(x_vec, y_vec) + 1) **5
 
 def radialBasis(x_vec, y_vec):
     sigma = 2
