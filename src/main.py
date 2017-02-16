@@ -33,8 +33,8 @@ def generateP(data, N):
 
 
 def kernel(x_vec, y_vec):
-    return (numpy.dot(x_vec, y_vec) + 1) **3
-        #result += x*y
+    return radialBasis(x_vec, y_vec)
+
 
 def constructQ(N):
     q = numpy.zeros(N)
@@ -51,6 +51,16 @@ def constructG(N):
     numpy.fill_diagonal(G, -1)
     return G
 
+def linearKernel(x_vec, y_vec):
+    return numpy.dot(x_vec, y_vec) + 1
+
+def polynomialKernel(x_vec, y_vec):
+    return (numpy.dot(x_vec, y_vec) + 1) **3
+
+def radialBasis(x_vec, y_vec):
+    sigma = 2
+    vec_diff = numpy.subtract(x_vec, y_vec)
+    return math.exp(-numpy.dot(vec_diff, vec_diff) / (2 * sigma**2))
 
 
 N = 20
