@@ -5,16 +5,16 @@ from datetime import datetime
 #matrix is a function which takes anything that can be interpreted as a matrix, and converts it into a cvxopt matrix which can be passed as a parameter to qp
 
 ## generate training data
-classA = [(random.normalvariate(-1.5, 0.5),
-           random.normalvariate(0.5, 0.5),
+classA = [(random.normalvariate(-1.5, 1),
+           random.normalvariate(0.5, 1),
            1)
            for i in range(5)] + \
-        [(random.normalvariate(-1.5, 0.5),
-          random.normalvariate(0.5, 0.5),
+        [(random.normalvariate(1.5, 1),
+          random.normalvariate(0.5, 1),
           1)
           for i in range(5)]
 
-classB = [(random.normalvariate(0, 0.5),
+classB = [(random.normalvariate(0.0, 0.5),
             random.normalvariate(-0.5, 0.5),
             -1)
             for i in range(10)]
@@ -44,11 +44,16 @@ def constructQ(N):
 
 def constructH(N):
     h = numpy.zeros(N)
+    slack = numpy.ones(N)
+    h = numpy.append(h, slack)
     return h
 
 def constructG(N):
     G = numpy.zeros((N, N))
     numpy.fill_diagonal(G, -1)
+    slack  = numpy.zeros((N, N))
+    numpy.fill_diagonal(slack, 0.2)
+    G = numpy.append(G, slack, axis=0)
     return G
 
 def linearKernel(x_vec, y_vec):
@@ -69,7 +74,7 @@ q = constructQ(N)
 h = constructH(N)
 G = constructG(N)
 r = qp(matrix(P), matrix(q), matrix(G), matrix(h))
-print(r)
+print(G)
 alpha = list(r["x"])
 optData = []
 optAlpha = []
