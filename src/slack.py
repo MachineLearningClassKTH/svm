@@ -32,8 +32,8 @@ def generateP(data, N):
 
 #kernel function
 def kernel(x_vec, y_vec):
-    #return linearKernel(x_vec, y_vec)
-    return polynomialKernel(x_vec, y_vec)
+    return linearKernel(x_vec, y_vec)
+    #return polynomialKernel(x_vec, y_vec)
     #return radialBasis(x_vec, y_vec)
 
 
@@ -53,9 +53,9 @@ def constructH(N,C):
 def constructG(N):
     G = numpy.zeros((N, N))
     numpy.fill_diagonal(G, -1)
-    #slack  = numpy.zeros((N, N))
-    #numpy.fill_diagonal(slack, 0.2)
-    G = numpy.append(G, G, axis=0)
+    slack  = numpy.zeros((N, N))
+    numpy.fill_diagonal(slack, 1)
+    G = numpy.append(G, slack, axis=0)
     return G
 
 def linearKernel(x_vec, y_vec):
@@ -74,7 +74,7 @@ def radialBasis(x_vec, y_vec):
 
 
 N = 20
-C = 20
+C = 5
 P = generateP(data, N)
 q = constructQ(N)
 h = constructH(N,C)
