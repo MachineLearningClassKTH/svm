@@ -5,12 +5,12 @@ from datetime import datetime
 #matrix is a function which takes anything that can be interpreted as a matrix, and converts it into a cvxopt matrix which can be passed as a parameter to qp
 
 ## generate training data
-classA = [(random.normalvariate(-1.5, 0.5),
-           random.normalvariate(0.5, 0.5),
+classA = [(random.normalvariate(-1.5, 2),
+           random.normalvariate(1, 2),
            1)
            for i in range(5)] + \
-        [(random.normalvariate(-1.5, 0.5),
-          random.normalvariate(0.5, 0.5),
+        [(random.normalvariate(-1.5, 0),
+          random.normalvariate(1, 0.5),
           1)
           for i in range(5)]
 
@@ -21,7 +21,7 @@ classB = [(random.normalvariate(0, 0.5),
 data = classA + classB
 random.shuffle(data)
 
-#generate a P matrix
+# Generate a P matrix
 def generateP(data, N):
     p = numpy.zeros((N, N))
     for i in range(N):
@@ -32,7 +32,9 @@ def generateP(data, N):
 
 #kernel function
 def kernel(x_vec, y_vec):
-    return linearKernel(x_vec, y_vec)
+    #return linearKernel(x_vec, y_vec)
+    #return polynomialKernel(x_vec, y_vec)
+    return radialBasis(x_vec, y_vec)
 
 
 
@@ -52,12 +54,15 @@ def constructG(N):
     return G
 
 def linearKernel(x_vec, y_vec):
+    # return x * y + 1
     return numpy.dot(x_vec, y_vec) + 1
 
 def polynomialKernel(x_vec, y_vec):
+    # return (x * y + 1)^p
     return (numpy.dot(x_vec, y_vec) + 1) **5
 
 def radialBasis(x_vec, y_vec):
+    # return e^((x-y)^2)/(2*sigma^2))
     sigma = 2
     vec_diff = numpy.subtract(x_vec, y_vec)
     return math.exp(-numpy.dot(vec_diff, vec_diff) / (2 * sigma**2))
@@ -102,5 +107,5 @@ grid = matrix([[indicator(x, y)
       for y in yrange ]
       for x in xrange])
 pylab.contour(xrange, yrange, grid, (-1.0, 0, 1.0), colors=("red", "black", "blue"), linewidths=(1, 3, 1))
-pylab.savefig("../plots/{}.png".format(datetime.now().strftime('%s')))
+pylab.savefig("../newplots/{}.png".format(datetime.now().strftime('%s')))
 pylab.show()
