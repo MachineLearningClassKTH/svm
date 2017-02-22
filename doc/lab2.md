@@ -36,6 +36,30 @@ On the other hand, if we set the different sign of mean in the normal
 distribution in class A, the data of classB would be located between the
 data of ClassA. Therefore, This make the classification harder.
 
+#### Polynomial function
+P=2, P=3
+```python
+    classA = [(random.normalvariate(-1.5, 1.5),
+               random.normalvariate(0.5, 1.5),
+               1)
+               for i in range(intA)] + \
+            [(random.normalvariate(1.5, 1.5),
+              random.normalvariate(0.5, 1.5),
+              1)
+              for i in range(intA)]
+
+    classB = [(random.normalvariate(0, 1),
+                random.normalvariate(-0.5, 1),
+                -1)
+                for i in range(intB)]
+    data = classA + classB
+    random.shuffle(data)
+    return classA, classB, data
+```
+
+
+
+
 ### 2
 
 put images plotted hyperplane with non-linear kernel function.

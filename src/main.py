@@ -2,24 +2,8 @@ from cvxopt.solvers import qp
 from cvxopt.base import matrix
 import numpy, pylab, random, math
 from datetime import datetime
+from makeData import *
 #matrix is a function which takes anything that can be interpreted as a matrix, and converts it into a cvxopt matrix which can be passed as a parameter to qp
-
-## generate training data
-classA = [(random.normalvariate(-1.5, 2),
-           random.normalvariate(1, 2),
-           1)
-           for i in range(5)] + \
-        [(random.normalvariate(-1.5, 0),
-          random.normalvariate(1, 0.5),
-          1)
-          for i in range(5)]
-
-classB = [(random.normalvariate(0, 0.5),
-            random.normalvariate(-0.5, 0.5),
-            -1)
-            for i in range(10)]
-data = classA + classB
-random.shuffle(data)
 
 # Generate a P matrix
 def generateP(data, N):
@@ -33,8 +17,8 @@ def generateP(data, N):
 #kernel function
 def kernel(x_vec, y_vec):
     #return linearKernel(x_vec, y_vec)
-    #return polynomialKernel(x_vec, y_vec)
-    return radialBasis(x_vec, y_vec)
+    return polynomialKernel(x_vec, y_vec)
+    #return radialBasis(x_vec, y_vec)
 
 
 
@@ -59,16 +43,18 @@ def linearKernel(x_vec, y_vec):
 
 def polynomialKernel(x_vec, y_vec):
     # return (x * y + 1)^p
-    return (numpy.dot(x_vec, y_vec) + 1) **5
+    return (numpy.dot(x_vec, y_vec) + 1) **4
 
 def radialBasis(x_vec, y_vec):
     # return e^((x-y)^2)/(2*sigma^2))
-    sigma = 2
+    sigma = 0.4
     vec_diff = numpy.subtract(x_vec, y_vec)
     return math.exp(-numpy.dot(vec_diff, vec_diff) / (2 * sigma**2))
 
 
 N = 20
+## generate training data from makeData
+classA,classB,data = makeData(N)
 P = generateP(data, N)
 q = constructQ(N)
 h = constructH(N)
