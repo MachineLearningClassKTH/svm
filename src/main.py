@@ -16,8 +16,8 @@ def generateP(data, N):
 
 #kernel function
 def kernel(x_vec, y_vec):
-    return linearKernel(x_vec, y_vec)
-    #return polynomialKernel(x_vec, y_vec)
+    #return linearKernel(x_vec, y_vec)
+    return polynomialKernel(x_vec, y_vec)
     #return radialBasis(x_vec, y_vec)
 
 
@@ -43,7 +43,7 @@ def linearKernel(x_vec, y_vec):
 
 def polynomialKernel(x_vec, y_vec):
     # return (x * y + 1)^p
-    return (numpy.dot(x_vec, y_vec) + 1) **5
+    return (numpy.dot(x_vec, y_vec) + 1) **4
 
 def radialBasis(x_vec, y_vec):
     # return e^((x-y)^2)/(2*sigma^2))

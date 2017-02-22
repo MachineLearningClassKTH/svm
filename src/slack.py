@@ -19,11 +19,12 @@ def constructQ(N):
         q[i] = -1
     return q
 
-def constructH(N,C):
+def constructH(N, C):
     h = numpy.zeros(N)
     slack = numpy.full(N,C)
 
     h = numpy.append(h, slack)
+    print(h)
     return h
 
 def constructG(N):
@@ -64,7 +65,7 @@ C = 100000000
 classA, classB, data = makeData(N)
 P = generateP(data, N)
 q = constructQ(N)
-h = constructH(N,C)
+h = constructH(N)
 G = constructG(N)
 r = qp(matrix(P), matrix(q), matrix(G), matrix(h))
 print(r)
