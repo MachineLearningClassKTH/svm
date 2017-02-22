@@ -21,9 +21,23 @@ def makeData(N):
     random.shuffle(data)
     return classA, classB, data
 
-def readData(File):
-    data = 2
-    return data
 
-
-def writeData(File):
+# def anonfunc((A,B)):
+#
+#
+# def readData(File):
+#     list = []
+#     with open(File) as csvfile:
+#         reader = csv.reader(csvfile, delimiter=',', quotechar='|')
+#         list = [tuple(row) for row in reader]
+#     list = map()
+#     print(list)
+#     return
+#
+#
+# def writeData(File, Data):
+#     with open(File, 'w') as csvfile:
+#         writer = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+#         for item in Data:
+#             writer.writerow(item)
+#     return
