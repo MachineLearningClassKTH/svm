@@ -2,7 +2,7 @@ from cvxopt.solvers import qp
 from cvxopt.base import matrix
 import numpy, pylab, random, math
 from datetime import datetime
-from makeData import makeData, readData
+from makeData import *
 #matrix is a function which takes anything that can be interpreted as a matrix, and converts it into a cvxopt matrix which can be passed as a parameter to qp
 
 # Generate a P matrix
