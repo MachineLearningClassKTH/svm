@@ -13,15 +13,6 @@ def generateP(data, N):
             p[i][j] = data[i][2] * data[j][2] * kernel(data[i][0:2], data[j][0:2])
     return p
 
-
-#kernel function
-def kernel(x_vec, y_vec):
-    return linearKernel(x_vec, y_vec)
-    #return polynomialKernel(x_vec, y_vec)
-    #return radialBasis(x_vec, y_vec)
-
-
-
 def constructQ(N):
     q = numpy.zeros(N)
     for i in range(N):
@@ -43,23 +34,31 @@ def constructG(N):
     G = numpy.append(G, slack, axis=0)
     return G
 
+
+#kernel function
+def kernel(x_vec, y_vec):
+    #return linearKernel(x_vec, y_vec)
+    return polynomialKernel(x_vec, y_vec)
+    #return radialBasis(x_vec, y_vec)
+
+
 def linearKernel(x_vec, y_vec):
     # return x * y + 1
     return numpy.dot(x_vec, y_vec) + 1
 
 def polynomialKernel(x_vec, y_vec):
     # return (x * y + 1)^p
-    return (numpy.dot(x_vec, y_vec) + 1) **4
+    return (numpy.dot(x_vec, y_vec) + 1) **5
 
 def radialBasis(x_vec, y_vec):
     # return e^((x-y)^2)/(2*sigma^2))
-    sigma = 2
+    sigma = 20
     vec_diff = numpy.subtract(x_vec, y_vec)
     return math.exp(-numpy.dot(vec_diff, vec_diff) / (2 * sigma**2))
 
 
 N = 20
-C = 99999
+C = 100000000
 
 ## generate training data from makeData file
 classA, classB, data = makeData(N)
@@ -102,5 +101,6 @@ grid = matrix([[indicator(x, y)
       for y in yrange ]
       for x in xrange])
 pylab.contour(xrange, yrange, grid, (-1.0, 0, 1.0), colors=("red", "black", "blue"), linewidths=(1, 3, 1))
+pylab.title('C = ' + str(C))
 pylab.savefig("../newplots/{}.png".format(datetime.now().strftime('%s')))
-pylab.show()
+#pylab.show()

@@ -8,7 +8,7 @@ def makeData(N):
                random.normalvariate(0.5, 1),
                1)
                for i in range(intA)] + \
-            [(random.normalvariate(-1.5, 1),
+            [(random.normalvariate(1.5, 1),
               random.normalvariate(0.5, 1),
               1)
               for i in range(intA)]
