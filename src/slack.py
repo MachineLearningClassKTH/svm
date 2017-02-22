@@ -44,10 +44,11 @@ def constructQ(N):
         q[i] = -1
     return q
 
-def constructH(N,C):
+def constructH(N, C):
     h = numpy.zeros(N)
     slack = numpy.full(N,C)
     h = numpy.append(h, slack)
+    print(h)
     return h
 
 def constructG(N):
@@ -74,13 +75,14 @@ def radialBasis(x_vec, y_vec):
 
 
 N = 20
-C = 5
+C = 0.0001
+
 P = generateP(data, N)
 q = constructQ(N)
 h = constructH(N,C)
 G = constructG(N)
 r = qp(matrix(P), matrix(q), matrix(G), matrix(h))
-print(G)
+#print(G)
 alpha = list(r["x"])
 optData = []
 optAlpha = []
