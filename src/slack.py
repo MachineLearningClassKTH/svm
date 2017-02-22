@@ -2,26 +2,10 @@ from cvxopt.solvers import qp
 from cvxopt.base import matrix
 import numpy, pylab, random, math
 from datetime import datetime
+from makeData import makeData, readData
 #matrix is a function which takes anything that can be interpreted as a matrix, and converts it into a cvxopt matrix which can be passed as a parameter to qp
 
-## generate training data
-classA = [(random.normalvariate(-1.5, 1),
-           random.normalvariate(0.5, 1),
-           1)
-           for i in range(5)] + \
-        [(random.normalvariate(1.5, 1),
-          random.normalvariate(0.5, 1),
-          1)
-          for i in range(5)]
-
-classB = [(random.normalvariate(0.0, 0.5),
-            random.normalvariate(-0.5, 0.5),
-            -1)
-            for i in range(10)]
-data = classA + classB
-random.shuffle(data)
-
-#generate a P matrix
+# Generate a P matrix
 def generateP(data, N):
     p = numpy.zeros((N, N))
     for i in range(N):
@@ -47,6 +31,7 @@ def constructQ(N):
 def constructH(N,C):
     h = numpy.zeros(N)
     slack = numpy.full(N,C)
+
     h = numpy.append(h, slack)
     return h
 
@@ -74,13 +59,16 @@ def radialBasis(x_vec, y_vec):
 
 
 N = 20
-C = 5
+C = 0.1
+
+## generate training data from makeData file
+classA, classB, data = makeData(N)
 P = generateP(data, N)
 q = constructQ(N)
 h = constructH(N,C)
 G = constructG(N)
 r = qp(matrix(P), matrix(q), matrix(G), matrix(h))
-print(G)
+print(r)
 alpha = list(r["x"])
 optData = []
 optAlpha = []
@@ -106,6 +94,7 @@ pylab.plot([p[0] for p in classA],
 pylab.plot([p[0] for p in classB],
          [p[1] for p in classB],
            "ro")
+
 
 xrange = numpy.arange(-4, 4, 0.05)
 yrange = numpy.arange(-4, 4, 0.05)
