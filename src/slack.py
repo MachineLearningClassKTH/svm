@@ -50,7 +50,7 @@ def linearKernel(x_vec, y_vec):
 
 def polynomialKernel(x_vec, y_vec):
     # return (x * y + 1)^p
-    return (numpy.dot(x_vec, y_vec) + 1) **3
+    return (numpy.dot(x_vec, y_vec) + 1) **4
 
 def radialBasis(x_vec, y_vec):
     # return e^((x-y)^2)/(2*sigma^2))
@@ -60,7 +60,7 @@ def radialBasis(x_vec, y_vec):
 
 
 N = 20
-C = 0.1
+C = 99999
 
 ## generate training data from makeData file
 classA, classB, data = makeData(N)
