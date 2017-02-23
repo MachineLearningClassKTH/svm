@@ -43,7 +43,7 @@ def linearKernel(x_vec, y_vec):
 
 def polynomialKernel(x_vec, y_vec):
     # return (x * y + 1)^p
-    return (numpy.dot(x_vec, y_vec) + 1) **4
+    return (numpy.dot(x_vec, y_vec) + 1) **5
 
 def radialBasis(x_vec, y_vec):
     # return e^((x-y)^2)/(2*sigma^2))
@@ -94,4 +94,4 @@ grid = matrix([[indicator(x, y)
       for x in xrange])
 pylab.contour(xrange, yrange, grid, (-1.0, 0, 1.0), colors=("red", "black", "blue"), linewidths=(1, 3, 1))
 pylab.savefig("../newplots/{}.png".format(datetime.now().strftime('%s')))
-pylab.show()
+#pylab.show()

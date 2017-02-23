@@ -64,12 +64,11 @@ P=2, P=3
 
 put images plotted hyperplane with non-linear kernel function.
 
-### 3 (rewrite)
-
-If we set the parameter bigger, the smaller margin of hyperplane is
-chosen. Maximizing the margin of the hyperplane means to maximize the
-variance. The bigger parameter makes the variance lower and it cause
-making the margin smaller.
+### 3 
+If p becomes larger, it means that the model becomes more complex, causing better fitness. In other words, the variance becomes larger.
+The larger sigma is, the smaller variance is.
+The small sigma gives you low bias and high variance.
+https://www.quora.com/What-are-C-and-gamma-with-regards-to-a-support-vector-machine
 
 7 Slack Implementation
 ----------------------

@@ -39,8 +39,8 @@ def constructG(N):
 #kernel function
 def kernel(x_vec, y_vec):
     #return linearKernel(x_vec, y_vec)
-    return polynomialKernel(x_vec, y_vec)
-    #return radialBasis(x_vec, y_vec)
+    #return polynomialKernel(x_vec, y_vec)
+    return radialBasis(x_vec, y_vec)
 
 
 def linearKernel(x_vec, y_vec):
@@ -49,11 +49,11 @@ def linearKernel(x_vec, y_vec):
 
 def polynomialKernel(x_vec, y_vec):
     # return (x * y + 1)^p
-    return (numpy.dot(x_vec, y_vec) + 1) **5
+    return (numpy.dot(x_vec, y_vec) + 1) **3
 
 def radialBasis(x_vec, y_vec):
     # return e^((x-y)^2)/(2*sigma^2))
-    sigma = 20
+    sigma = 1
     vec_diff = numpy.subtract(x_vec, y_vec)
     return math.exp(-numpy.dot(vec_diff, vec_diff) / (2 * sigma**2))
 
@@ -65,7 +65,7 @@ C = 100000000
 classA, classB, data = makeData(N)
 P = generateP(data, N)
 q = constructQ(N)
-h = constructH(N)
+h = constructH(N, C)
 G = constructG(N)
 r = qp(matrix(P), matrix(q), matrix(G), matrix(h))
 print(r)

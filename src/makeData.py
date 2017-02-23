@@ -8,13 +8,8 @@ def makeData(N):
                random.normalvariate(0.5, 1.5),
                1)
                for i in range(intA)] + \
-<<<<<<< HEAD
-            [(random.normalvariate(1.5, 1),
-              random.normalvariate(0.5, 1),
-=======
             [(random.normalvariate(1.5, 1.5),
               random.normalvariate(0.5, 1.5),
->>>>>>> 6ea34be95b0a5ca5f0145d12e1a3d3fcfe240f9a
               1)
               for i in range(intA)]
 
